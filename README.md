@@ -5,21 +5,23 @@
 ```diff
 $ todo_
 
-$ do_ this
-+ this
+$ do_ Write tests
++ Write tests
 
-$ do_ this and that
-+ this and that
+$ do_ Setup CI
+• Write tests
++ Setup CI
 
 $ todo_
-* this
-* this and that
+• Write tests
+• Setup CI
 
-$ did_ this
-- this
+$ did_ Write tests
+- Write tests
+• Setup CI
 
-$ did_ this and that
-- this and that
+$ did_ Setup CI
+- Setup CI
 
 $ todo_
 ```

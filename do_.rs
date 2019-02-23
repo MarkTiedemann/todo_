@@ -1,20 +1,38 @@
-use std::env;
-use std::fs;
-use std::io::prelude::*;
+use std::env::{args, var};
+use std::fs::OpenOptions;
+use std::io::prelude::{Read, Write};
 
 fn main() {
-    let mut args: Vec<String> = env::args().collect();
-    let db_path = env::var("HOME").unwrap() + "/.todo_db";
-    let db_exists = fs::metadata(&db_path).is_ok();
-    if args.len() > 1 {
+    let mut args: Vec<String> = args().collect();
+    let default_path = var("HOME").unwrap() + "/.todo_db";
+    let path = var("TODO_DB").unwrap_or(default_path);
+    let mut file = OpenOptions::new()
+        .create(true)
+        .read(true)
+        .append(true)
+        .open(path)
+        .unwrap();
+    let mut contents = String::new();
+    file.read_to_string(&mut contents).unwrap();
+    let append = args.len() > 1;
+    if append {
         args.remove(0);
-        let mut db = fs::OpenOptions::new()
-            .create_new(!db_exists)
-            .append(true)
-            .open(&db_path)
-            .unwrap();
-        let todo = args.join(" ");
-        writeln!(db, "{}", todo).unwrap();
-        println!("\x1B[32m+ {}\x1B[0m", todo);
+    }
+    let joined_args = args.join(" ");
+    let todo = joined_args.trim();
+    let lines: Vec<&str> = contents
+        .trim()
+        .split("\n")
+        .filter(|x| x.trim().len() > 0)
+        .collect();
+    for line in &lines {
+        println!("\x1B[37m• {}\x1B[0m", line);
+    }
+    if append {
+        if !lines.contains(&todo) {
+            println!("\x1B[1;32m+ {}\x1B[0m", todo);
+            let prefix = if contents.ends_with("\n") { "" } else { "\n" };
+            writeln!(file, "{}", prefix.to_owned() + &todo).unwrap();
+        }
     }
 }

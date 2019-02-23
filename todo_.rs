@@ -1,15 +1,18 @@
-use std::env;
-use std::fs;
-use std::io;
-use std::io::prelude::*;
+use std::env::var;
+use std::fs::{metadata, read_to_string};
 
 fn main() {
-    let db_path = env::var("HOME").unwrap() + "/.todo_db";
-    let db_exists = fs::metadata(&db_path).is_ok();
-    if db_exists {
-        let db = fs::OpenOptions::new().read(true).open(&db_path).unwrap();
-        for todo in io::BufReader::new(db).lines() {
-            println!("* {}", todo.unwrap());
+    let default_path = var("HOME").unwrap() + "/.todo_db";
+    let path = var("TODO_DB").unwrap_or(default_path);
+    if metadata(&path).is_ok() {
+        let contents = read_to_string(&path).unwrap();
+        let lines: Vec<&str> = contents
+            .trim()
+            .split("\n")
+            .filter(|x| x.trim().len() > 0)
+            .collect();
+        for line in lines {
+            println!("• {}", line);
         }
     }
 }
