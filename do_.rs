@@ -1,6 +1,6 @@
 use std::env::{args, var};
 use std::fs::OpenOptions;
-use std::io::prelude::{Read, Write};
+use std::io::{Read, Write};
 
 fn main() {
     let mut args: Vec<String> = args().collect();
@@ -23,7 +23,7 @@ fn main() {
     let lines: Vec<&str> = contents
         .trim()
         .split("\n")
-        .filter(|x| x.trim().len() > 0)
+        .filter(|line| line.trim().len() > 0)
         .collect();
     for line in &lines {
         println!("\x1B[37m• {}\x1B[0m", line);
