@@ -15,7 +15,7 @@ all: .todo_list
 	@echo '> did_ Setup CI'; $(env) did_ Setup CI
 	@echo '> todo_'; $(env) todo_
 
-%: %.rs
+%.exe: %.rs
 	rustc $^
 	rm -f .todo_list
 
