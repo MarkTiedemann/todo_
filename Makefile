@@ -2,7 +2,7 @@
 
 src := $(wildcard *.rs)
 bin := $(patsubst %.rs,%,$(src))
-env := PATH=$(shell pwd) TODO_LIST=.todo_list
+env := PATH=$(CURDIR) TODO_LIST=.todo_list
 
 all: .todo_list
 

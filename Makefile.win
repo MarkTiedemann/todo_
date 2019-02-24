@@ -2,18 +2,18 @@
 
 src := $(wildcard *.rs)
 bin := $(patsubst %.rs,%.exe,$(src))
-env := PATH=$(shell echo %cd%) TODO_LIST=.todo_list
+pwd := $(CURDIR)
 
 all: .todo_list
 
 .todo_list: $(bin)
-	@echo '> todo_'; $(env) todo_
-	@echo '> do_ Write tests'; $(env) do_ Write tests
-	@echo '> do_ Setup CI'; $(env) do_ Setup CI
-	@echo '> todo_'; $(env) todo_
-	@echo '> did_ Write tests'; $(env) did_ Write tests
-	@echo '> did_ Setup CI'; $(env) did_ Setup CI
-	@echo '> todo_'; $(env) todo_
+	@echo '> todo_'; $(pwd)\todo_
+	@echo '> do_ Write tests'; $(pwd)\do_ Write tests
+	@echo '> do_ Setup CI'; $(pwd)\do_ Setup CI
+	@echo '> todo_'; $(pwd)\todo_
+	@echo '> did_ Write tests'; $(pwd)\did_ Write tests
+	@echo '> did_ Setup CI'; $(pwd)\did_ Setup CI
+	@echo '> todo_'; $(pwd)\todo_
 
 %.exe: %.rs
 	rustc $^
