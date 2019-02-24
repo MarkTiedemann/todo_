@@ -7,13 +7,21 @@ all: .todo_list
 
 .todo_list: $(bin)
 	set TODO_LIST=.todo_list
-	@echo "\n> todo_" && todo_
-	@echo "\n> do_ Write tests" && do_ Write tests
-	@echo "\n> do_ Setup CI" && do_ Setup CI
-	@echo "\n> todo_" && todo_
-	@echo "\n> did_ Write tests" && did_ Write tests
-	@echo "\n> did_ Setup CI" && did_ Setup CI
-	@echo "\n> todo_" && todo_
+	set PATH=$(shell echo %cd%)
+	@echo.> todo_
+	@todo_
+	@echo.> do_ Write tests
+	@do_ Write tests
+	@echo.> do_ Setup CI
+	@do_ Setup CI
+	@echo.> todo_
+	@todo_
+	@echo.> did_ Write tests
+	@did_ Write tests
+	@echo.> did_ Setup CI
+	@did_ Setup CI
+	@echo> todo_
+	@todo_
 
 %.exe: %.rs
 	rustc $^
