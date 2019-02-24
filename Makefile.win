@@ -1,0 +1,30 @@
+.PHONY: all install clean
+
+src := $(wildcard *.rs)
+bin := $(patsubst %.rs,%.exe,$(src))
+
+all: .todo_list
+
+.todo_list: $(bin)
+  set PATH=$(shell %cd%)
+  set TODO_LIST=.todo_list
+	@echo "\n> todo_" && todo_
+	@echo "\n> do_ Write tests" && do_ Write tests
+	@echo "\n> do_ Setup CI" && do_ Setup CI
+	@echo "\n> todo_" && todo_
+	@echo "\n> did_ Write tests" && did_ Write tests
+	@echo "\n> did_ Setup CI" && did_ Setup CI
+	@echo "\n> todo_" && todo_
+  set PATH=
+  set TODO_LIST=
+
+%.exe: %.rs
+	rustfmt $^
+	rustc $^
+	rm -f .todo_list
+
+install:
+	rustup component add rustfmt
+
+clean:
+	rm -rf $(bin) .todo_list

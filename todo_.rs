@@ -2,8 +2,16 @@ use std::env::var;
 use std::fs::{metadata, read_to_string};
 
 fn main() {
-    let home = var("HOME").unwrap();
-    let default_path = home.clone() + "/.todo_list";
+    let home = if cfg!(windows) {
+        var("HOMEDRIVE").unwrap() + &var("HOMEPATH").unwrap()
+    } else {
+        var("HOME").unwrap()
+    };
+    let default_path = if cfg!(windows) {
+        home.clone() + "\\.todo_list"
+    } else {
+        home.clone() + "/.todo_list"
+    };
     let path = var("TODO_LIST").unwrap_or(default_path);
     if var("TODO_PRINT_PATH").is_ok() {
         println!("\x1B[35m{}\x1B[0m", path.replace(&home, "~"));
