@@ -17,7 +17,7 @@ all: .todo_list
 
 %.exe: %.rs
 	rustc $^
-	del /q /s .todo_list
+	del /q /f .todo_list
 
 clean:
-	del /q /s $(bin) .todo_list
+	del /q /f $(bin) .todo_list
