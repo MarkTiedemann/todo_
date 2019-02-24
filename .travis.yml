@@ -2,5 +2,7 @@ language: rust
 os:
   - linux
   - osx
+before_install:
+  - rustup component add rustfmt
 script:
   - make
