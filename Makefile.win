@@ -15,13 +15,11 @@ all: .todo_list
 	@echo "\n> did_ Write tests" && did_ Write tests
 	@echo "\n> did_ Setup CI" && did_ Setup CI
 	@echo "\n> todo_" && todo_
-  set PATH=
-  set TODO_LIST=
 
 %.exe: %.rs
 	rustfmt $^
 	rustc $^
-	rm -f .todo_list
+	del /q /s .todo_list
 
 clean:
-	rm -rf $(bin) .todo_list
+	del /q /s $(bin) .todo_list
