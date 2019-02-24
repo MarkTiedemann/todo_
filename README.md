@@ -4,7 +4,7 @@
 
 | **Linux & Mac** | **Windows** |
 | --------------- | ----------- |
-| [![Travis Build Status](https://travis-ci.com/MarkTiedemann/todo_.svg?branch=master)](https://travis-ci.com/MarkTiedemann/todo_) | [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/82o7yqy74pv3ca3i?svg=true)](https://ci.appveyor.com/project/MarkTiedemann/todo) |
+| [![Travis Build Status](https://travis-ci.org/MarkTiedemann/todo_.svg?branch=master)](https://travis-ci.org/MarkTiedemann/todo_) | [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/82o7yqy74pv3ca3i?svg=true)](https://ci.appveyor.com/project/MarkTiedemann/todo) |
 
 ## Quickstart
 
