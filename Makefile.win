@@ -17,7 +17,6 @@ all: .todo_list
 	@echo "\n> todo_" && todo_
 
 %.exe: %.rs
-	rustfmt $^
 	rustc $^
 	del /q /s .todo_list
 

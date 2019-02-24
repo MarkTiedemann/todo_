@@ -1,7 +1,6 @@
 install:
   - ps: iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
-  - ps: scoop install make rustup rust
-  - ps: rustup component add rustfmt
+  - ps: scoop install make rust
 build: off
 test_script:
   - make -f Makefile.win
