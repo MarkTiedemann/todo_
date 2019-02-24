@@ -1,6 +1,16 @@
 install:
   - ps: iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
-  - ps: scoop install make rust
-build: off
+  - scoop install make rust
+build:
+  - rustc did_.rs
+  - rustc do_.rs
+  - rustc todo_.rs
 test_script:
-  - make -f Makefile.win
+  - set TODO_PRINT_PATH=true
+  - todo_
+  - do_ Write tests
+  - do_ Setup CI
+  - todo_
+  - did_ Write tests
+  - did_ Setup CI
+  - todo_
