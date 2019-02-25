@@ -1,4 +1,4 @@
 # Todo
 
+- Improve error messages
 - Release binaries
-- Make `do_` and `did_` case-insensitive

@@ -1,5 +1,6 @@
 use std::env::{args, var};
 use std::fs::OpenOptions;
+use std::io::{stdin, BufRead};
 use std::io::{Read, Write};
 
 fn main() {
@@ -17,14 +18,6 @@ fn main() {
     if var("TODO_PRINT_PATH").is_ok() {
         println!("\x1B[35m{}\x1B[0m", path.replace(&home, "~"));
     }
-
-    let mut args: Vec<String> = args().collect();
-    let append = args.len() > 1;
-    if append {
-        args.remove(0);
-    }
-    let joined_args = args.join(" ");
-    let todo = joined_args.trim();
 
     let mut file = OpenOptions::new()
         .create(true)
@@ -45,11 +38,43 @@ fn main() {
         println!("• {}", line);
     }
 
-    if append {
-        if !lines.contains(&todo) {
-            println!("\x1B[32m+ {}\x1B[0m", todo);
-            let prefix = if contents.ends_with("\n") { "" } else { "\n" };
-            writeln!(file, "{}", prefix.to_owned() + &todo).unwrap();
+    let todos: Vec<String>;
+    let args = args();
+    if args.len() > 1 {
+        let mut words: Vec<String> = args.collect();
+        words.remove(0);
+        let joined = words.join(" ");
+        let todo = joined.trim();
+        if lines.contains(&todo) {
+            todos = vec![];
+        } else {
+            todos = vec![todo.to_string()];
         }
+    } else {
+        let stdin = stdin();
+        todos = stdin
+            .lock()
+            .lines()
+            .map(|line| line.unwrap())
+            .map(|line| line.trim().to_string())
+            .map(|todo| {
+                if todo.starts_with("• ") {
+                    // • is 3 bytes long
+                    todo.get(4..).unwrap().to_string()
+                } else {
+                    todo
+                }
+            })
+            .filter(|todo| !lines.contains(&&todo[..]))
+            .collect();
+    }
+
+    if todos.len() > 0 {
+        for todo in &todos {
+            println!("\x1B[32m+ {}\x1B[0m", todo);
+        }
+        let prefix = if contents.ends_with("\n") { "" } else { "\n" };
+        let new_contents = prefix.to_owned() + &todos.join("\n") + "\n";
+        writeln!(file, "{}", new_contents).unwrap();
     }
 }

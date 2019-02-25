@@ -9,8 +9,6 @@
 ## Quickstart
 
 ```diff
-$ todo_
-
 $ do_ Write tests
 + Write tests
 
@@ -28,8 +26,6 @@ $ did_ Write tests
 
 $ did_ Setup CI
 - Setup CI
-
-$ todo_
 ```
 
 ## FAQ
@@ -44,26 +40,71 @@ By default, it is saved in `~/.todo_List`.
 
 **> How can I save the list in a different location?**
 
-Set the `TODO_LIST` env var pointing to the new location.
+Set the `TODO_LIST` environment variable pointing to the new location. For example:
 
-**> How can I rearrange the list?**
+```sh
+export TODO_LIST=~/Documents/TodoList.txt
+```
 
-Edit `~/.todo_list` or `$TODO_LIST`.
+**> How can I re-arrange the list?**
+
+There is no built-in functionality for this in `todo_`. But since the todo list is persisted in a text file, you can simply edit `~/.todo_list` (or `$TODO_LIST`) in a text editor and re-arrange the lines.
+
+**> How can I add multiple todos at the same time?**
+
+By piping the todos to stdin. For example:
+
+```diff
+$ cat todos.txt
+Setup Linux CI
+Setup Windows CI
+
+$ cat todos.txt | do_
++ Setup Linux CI
++ Setup Windows CI
+```
 
 **> How can I search for todos?**
 
-You can `grep` the output of `todo_`.
+There is no built-in search functionality in `todo_`. But you can easily `grep` the output of `todo_`. For example:
+
+```sh
+$ todo_ | grep CI
+• Setup Linux CI
+• Setup Windows CI
+```
+
+**> How can I remove multiple todos at the same time?**
+
+By piping the todos to stdin. For example:
+
+```diff
+$ todo_ | grep CI | did_
+- Setup Linux CI
+- Setup Windows CI
+```
+
+Note that leading `• ` will be stripped automatically.
 
 **> How can I work with multiple lists?**
 
-By using the `TODO_LIST` env var, for example:
+You can use the `TODO_LIST` environment variable to accomplish this. For example, by setting aliases for different lists:
 
 ```sh
 alias todo_home="export TODO_LIST=~/.todo_home; todo_"
 alias todo_work="export TODO_LIST=~/.todo_work; todo_"
 ```
 
-If you are regularly working with multiple lists, you may want to set the `TODO_PRINT_PATH` env var to see which list you are currently working with.
+If you are regularly working with multiple lists, you may want to set the `TODO_PRINT_PATH` env var to see which list you are currently working with. For example:
+
+```sh
+$ export TODO_PRINT_PATH=1
+
+$ todo_
+~/.todo_home
+• Buy groceries
+• Mow the lawn
+```
 
 ## License
 
