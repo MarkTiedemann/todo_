@@ -1,18 +1,18 @@
-.PHONY: all clean
+.PHONY: all test fmt clean
 
-src := $(wildcard *.rs)
-bin := $(patsubst %.rs,%,$(src))
-env := PATH=$(CURDIR) TODO_LIST=.todo_list
+src := $(wildcard *_.rs)
+bin := $(patsubst %_.rs,%_,$(src))
 
-all: .todo_list
+all: $(bin)
 
-.todo_list: $(bin) test.sh
+%_: %_.rs
+	rustc $^
+
+test:
 	sh test.sh
 
-%: %.rs
-	rustfmt $^
-	rustc $^
-	rm -f .todo_list
+fmt:
+	rustfmt $(wildcard *.rs)
 
 clean:
-	rm -rf $(bin) .todo_list
+	rm -f $(bin) .todo_list

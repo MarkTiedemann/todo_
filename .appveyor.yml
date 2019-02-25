@@ -6,7 +6,7 @@ test_script:
   - rustc did_.rs
   - rustc do_.rs
   - rustc todo_.rs
-  - set TODO_PRINT_PATH=true
+  - set TODO_PRINT_PATH=1
   - todo_
   - do_ Write tests
   - do_ Setup CI

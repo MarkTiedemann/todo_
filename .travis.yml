@@ -5,4 +5,7 @@ os:
 before_install:
   - rustup component add rustfmt
 script:
+  - make fmt
+  - git diff --exit-code
   - make
+  - make test
