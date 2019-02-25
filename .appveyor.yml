@@ -2,6 +2,13 @@ install:
   - ps: iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
   - scoop install rust
 build: off
+artifacts:
+  - path: did_.exe
+    name: did_.exe
+  - path: do_.exe
+    name: do_.exe
+  - path: todo_.exe
+    name: todo_.exe
 test_script:
   - rustc did_.rs
   - rustc do_.rs
@@ -19,6 +26,7 @@ deploy:
   auth_token:
     secure: gskuIEvm/3WstF5xkqyBHD2w+qmfvKS7WsulFPQX9ZTj0bcGWxpikHjdnyJi7ksn
   artifact: /.*\.exe/
+  force_update: true
   on:
     APPVEYOR_REPO_TAG: true
     APPVEYOR_REPO_NAME: MarkTiedemann/todo_
