@@ -14,3 +14,11 @@ test_script:
   - did_ Write tests
   - did_ Setup CI
   - todo_
+deploy:
+  provider: GitHub
+  auth_token:
+    secure: gskuIEvm/3WstF5xkqyBHD2w+qmfvKS7WsulFPQX9ZTj0bcGWxpikHjdnyJi7ksn
+  artifact: did_.exe,do_.exe,todo_.exe
+  on:
+    APPVEYOR_REPO_TAG: true
+    APPVEYOR_REPO_NAME: MarkTiedemann/todo_

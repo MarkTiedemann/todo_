@@ -1,11 +1,47 @@
-language: rust
-os:
-  - linux
-  - osx
-before_install:
-  - rustup component add rustfmt
-script:
-  - make fmt
-  - git diff --exit-code
-  - make
-  - make test
+matrix:
+  include:
+  - language: rust
+    os: linux
+    script:
+      - rustup component add rustfmt
+      - make fmt
+      - git diff --exit-code
+      - make
+      - make test
+      - mv did_ did_linux
+      - mv do_ do_linux
+      - mv todo_ todo_linux
+    deploy:
+      provider: releases
+      api_key:
+        secure: "NZMWGjYeKCOukKmtP5GcwGSDLF7EANc8336qilcxaLpGXUEnnasTrudls/VyeF7/xYDygCPPsSdeDb4L6Mk/0ZsBDldQt+26IgVLTzq7ZbADQcyl+dvCqncrylgF86rYyF7k0lTixraPsAVJeRvOkrpGqwiAfArZp+i4FgR4XDVVlWxzuNSJTMyEvobH4X88MVoX6b1EqPCs1rgoCzVcJsRS1kIt0HN7YXz8APKnLSU2Xzy9KCPxQj/jQS5E2LwiySB9Wv4YUET8HFAVtAB/tNXp8SsBXjFGXtpzsaKukGzARv7W9PxIZtICPxbbGvKHRDFHyxLDy2LXKvCqSQrHzWpxJ7zTt4bDYIvX8w8IMGyjxd87o30GCVQ9wCqbZHLv66ro8INHc2nnf9B9oWN5d0lHBudn5fhLDt7J6l12rK6xk4rYfeoJgrDc7EESriWGdmYRQiALxFm12Sl28pKFmCB58g4HiS7xK3wnIkEzxFaFsUOwF8czfKjjNrZWTpFEpRdvVuSP7hZYh4lfT/YGwPK3rpOXY0lLecylHsBSXeERCq8OT3fsKeXPz89H0Igv0eMbdfQryTQVtSdky+zTQUhP/SkRFnQfSm84OtMxMuHhDBfdWWkydkbHKYYBjwZb+3JJegs6+ymbDfPjWVhZptrbnoTwLhLqFcm28V96mvE="
+      file:
+        - did_linux
+        - do_linux
+        - todo_linux
+      skip_cleanup: true
+      on:
+        branch: master
+        tags: true
+        repo: MarkTiedemann/todo_
+  - language: rust
+    os: osx
+    script:
+      - make
+      - make test
+      - mv did_ did_osx
+      - mv do_ do_osx
+      - mv todo_ todo_osx
+    deploy:
+      provider: releases
+      api_key:
+        secure: "NZMWGjYeKCOukKmtP5GcwGSDLF7EANc8336qilcxaLpGXUEnnasTrudls/VyeF7/xYDygCPPsSdeDb4L6Mk/0ZsBDldQt+26IgVLTzq7ZbADQcyl+dvCqncrylgF86rYyF7k0lTixraPsAVJeRvOkrpGqwiAfArZp+i4FgR4XDVVlWxzuNSJTMyEvobH4X88MVoX6b1EqPCs1rgoCzVcJsRS1kIt0HN7YXz8APKnLSU2Xzy9KCPxQj/jQS5E2LwiySB9Wv4YUET8HFAVtAB/tNXp8SsBXjFGXtpzsaKukGzARv7W9PxIZtICPxbbGvKHRDFHyxLDy2LXKvCqSQrHzWpxJ7zTt4bDYIvX8w8IMGyjxd87o30GCVQ9wCqbZHLv66ro8INHc2nnf9B9oWN5d0lHBudn5fhLDt7J6l12rK6xk4rYfeoJgrDc7EESriWGdmYRQiALxFm12Sl28pKFmCB58g4HiS7xK3wnIkEzxFaFsUOwF8czfKjjNrZWTpFEpRdvVuSP7hZYh4lfT/YGwPK3rpOXY0lLecylHsBSXeERCq8OT3fsKeXPz89H0Igv0eMbdfQryTQVtSdky+zTQUhP/SkRFnQfSm84OtMxMuHhDBfdWWkydkbHKYYBjwZb+3JJegs6+ymbDfPjWVhZptrbnoTwLhLqFcm28V96mvE="
+      file:
+        - did_osx
+        - do_osx
+        - todo_osx
+      skip_cleanup: true
+      on:
+        branch: master
+        tags: true
+        repo: MarkTiedemann/todo_
