@@ -18,13 +18,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: gskuIEvm/3WstF5xkqyBHD2w+qmfvKS7WsulFPQX9ZTj0bcGWxpikHjdnyJi7ksn
-  artifact:
-    - path: did_.exe
-      name: did_.exe
-    - path: do_.exe
-      name: do_.exe
-    - path: todo_.exe
-      name: todo_.exe
+  artifact: /.*\.exe/
   on:
     APPVEYOR_REPO_TAG: true
     APPVEYOR_REPO_NAME: MarkTiedemann/todo_
