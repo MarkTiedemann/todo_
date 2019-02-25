@@ -22,11 +22,10 @@ pub fn init_path() -> String {
 #[allow(dead_code)]
 pub fn get_todos() -> Vec<String> {
     let todos: Vec<String>;
-    let args = args();
+    let mut args: Vec<String> = args().collect();
     if args.len() > 1 {
-        let mut words: Vec<String> = args.collect();
-        words.remove(0);
-        let joined = words.join(" ");
+        args.remove(0);
+        let joined = args.join(" ");
         let todo = joined.trim();
         todos = vec![todo.to_string()];
     } else {
@@ -49,13 +48,12 @@ pub fn get_todos() -> Vec<String> {
     return todos;
 }
 
-#[allow(dead_code)]
 pub fn split_lines(contents: String) -> Vec<String> {
     let lines: Vec<String> = contents
         .trim()
         .split("\n")
-        .filter(|x| x.trim().len() > 0)
-        .map(|x| x.to_string())
+        .filter(|line| line.trim().len() > 0)
+        .map(|line| line.to_string())
         .collect();
     return lines;
 }
