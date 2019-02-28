@@ -28,6 +28,20 @@ $ did_ Setup CI
 - Setup CI
 ```
 
+## Installation
+
+**Download binaries:**
+
+From GitHub [Releases](https://github.com/MarkTiedemann/todo_/releases).
+
+**Or build from source:**
+
+```sh
+git clone https://github.com/MarkTiedemann/todo_
+cd todo_
+make
+```
+
 ## FAQ
 
 **> Why the trailing underscore?**
@@ -74,6 +88,12 @@ $ todo_ | grep CI
 • Setup Windows CI
 ```
 
+If you find yourself needing this functionality a lot, you can create a function for it. For example:
+
+```sh
+todo_g () { todo_ | grep "$*" }
+```
+
 **> How can I remove multiple todos at the same time?**
 
 By piping the todos to stdin. For example:
@@ -86,13 +106,19 @@ $ todo_ | grep CI | did_
 
 Note that leading `• ` will be stripped automatically.
 
-**> How can I work with multiple lists?**
-
-You can use the `TODO_LIST` environment variable to accomplish this. For example, by setting aliases for different lists:
+If you find yourself needing this functionality a lot, you can create a function for it. For example:
 
 ```sh
-alias todo_home="export TODO_LIST=~/.todo_home; todo_"
-alias todo_work="export TODO_LIST=~/.todo_work; todo_"
+did_g () { todo_ | grep "$*" | did_ }
+```
+
+**> How can I work with multiple lists?**
+
+You can use the `TODO_LIST` environment variable to accomplish this. For example, by setting up functions to switch between your lists:
+
+```sh
+todo_home () { export TODO_LIST=~/.todo_home; todo_ }
+todo_work () { export TODO_LIST=~/.todo_work; todo_ }
 ```
 
 If you are regularly working with multiple lists, you may want to set the `TODO_PRINT_PATH` env var to see which list you are currently working with. For example:
