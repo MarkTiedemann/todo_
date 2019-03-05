@@ -6,7 +6,7 @@ bin := $(patsubst %_.rs,%_,$(src))
 all: $(bin)
 
 %_: %_.rs
-	rustc $^
+	rustc -O -C lto $^
 
 test:
 	sh test.sh
